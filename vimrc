@@ -13,6 +13,7 @@ Plug 'raphamorim/lucario'
 Plug 'cseelus/vim-colors-lucid'
 Plug 'dracula/vim'
 Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp'
 
 call plug#end()
 
@@ -25,6 +26,8 @@ set softtabstop=4
 set expandtab
 set autoindent
 set number
+set list
+set listchars=tab:▸\ ,eol:¬
 
 " style
 " set background=dark
@@ -40,4 +43,7 @@ let mapleader = "\<Space>"
 
 " mappings
 imap <BS> <Left><Del>
+
+" filetype settings
+au FileType javascript setl sw=2 sts=2 ts=2
 
