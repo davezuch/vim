@@ -33,7 +33,12 @@ set fileformat=unix
 set number
 set list
 set listchars=tab:▸\ ,eol:¬
-match BadWhitespace /\s\+$/
+highlight ExtraWhiteSpace ctermbg=red guibg=red
+match ExtraWhiteSpace /\s\+$/
+autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
+autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
 
 " splits
 set splitbelow
@@ -61,9 +66,9 @@ set foldlevel=99
 nnoremap <space> za " remap space to fold
 
 " filetype settings
-au BufNewFile,BufRead *.js, *.html, *.css, *.sass
-    \ set tabstop=2
-    \ set softtabstop=2
+au BufNewFile,BufRead *.js,*.html,*.css,*.sass
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
     \ set shiftwidth=2
 "au FileType javascript setl sw=2 sts=2 ts=2
 
