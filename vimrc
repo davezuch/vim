@@ -1,10 +1,5 @@
 " pathogen first
 " execute pathogen#infect()
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
 
 " vim-plug (https://github.com/junegunn/vim-plug)
 call plug#begin('~/.vim/plugged')
@@ -21,6 +16,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
+Plug 'Valloric/YouCompleteMe'
 
 call plug#end()
 
@@ -37,6 +33,7 @@ set fileformat=unix
 set number
 set list
 set listchars=tab:▸\ ,eol:¬
+match BadWhitespace /\s\+$/
 
 " splits
 set splitbelow
