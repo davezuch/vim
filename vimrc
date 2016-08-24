@@ -17,6 +17,8 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'Valloric/YouCompleteMe'
+Plug 'scrooloose/syntastic'
+Plug 'nvie/vim-flake8'
 
 call plug#end()
 
@@ -49,26 +51,42 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " style
-" set background=dark
 syntax on
+set background=dark
 colorscheme lucario
 set t_Co=256  " vim-monokai now only support 256 colours in terminal.
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
+let python_highlight_all=1
 
 " basics
 inoremap jk <ESC>
 let mapleader = "\<Space>"
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 imap <BS> <Left><Del>
 " enable folding
 set foldmethod=indent
 set foldlevel=99
 nnoremap <space> za " remap space to fold
 
+" plugin settings
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+
 " filetype settings
+"au FileType javascript setl sw=2 sts=2 ts=2
 au BufNewFile,BufRead *.js,*.html,*.css,*.sass
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
-"au FileType javascript setl sw=2 sts=2 ts=2
+
+" python with virtualenv support
+py << EOF
+import os
+import sys
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
 
