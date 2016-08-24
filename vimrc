@@ -72,6 +72,7 @@ nnoremap <space> za " remap space to fold
 
 " plugin settings
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
