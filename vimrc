@@ -76,7 +76,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
-au BufNewFile,BufRead *.js,*.html,*.css,*.sass
+au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
