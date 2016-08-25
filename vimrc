@@ -34,7 +34,7 @@ set autoindent
 set fileformat=unix
 set number
 set list
-set listchars=tab:▸\ ,eol:¬
+set listchars=tab:▸\ 
 highlight ExtraWhiteSpace ctermbg=red guibg=red
 match ExtraWhiteSpace /\s\+$/
 autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
