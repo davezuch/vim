@@ -42,6 +42,8 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+set path+=**
+set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " splits
 set splitbelow
@@ -69,11 +71,10 @@ imap <BS> <Left><Del>
 " enable folding
 set foldmethod=indent
 set foldlevel=99
-nnoremap <space> za " remap space to fold
+"nnoremap <dd> za " remap space to fold
 
 " plugin settings
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
