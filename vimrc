@@ -56,11 +56,12 @@ nnoremap <C-H> <C-W><C-H>
 " style
 syntax on
 set background=dark
-colorscheme lucario
+colorscheme dracula
 set t_Co=256  " vim-monokai now only support 256 colours in terminal.
 let g:monokai_term_italic = 1
 let g:monokai_gui_italic = 1
 let python_highlight_all=1
+set hlsearch
 
 " basics
 inoremap jk <ESC>
