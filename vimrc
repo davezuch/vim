@@ -85,6 +85,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_php_checkers = ['php', 'phpmd']
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
