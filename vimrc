@@ -77,6 +77,15 @@ set foldlevel=99
 " plugin settings
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
 au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
