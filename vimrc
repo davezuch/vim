@@ -2,6 +2,11 @@
 " execute pathogen#infect()
 
 " vim-plug (https://github.com/junegunn/vim-plug)
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 call plug#begin('~/.vim/plugged')
 
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
@@ -86,6 +91,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_php_checkers = ['php', 'phpmd']
+let g:syntastic_javascript_checkers = ['eslint']
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
