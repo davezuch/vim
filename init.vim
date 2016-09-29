@@ -1,1 +1,1 @@
-/Users/Zuch/.vimrc
+/Users/Zuch/.vim/vimrc
