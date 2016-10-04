@@ -1,4 +1,9 @@
-let g:python_host_prog='/usr/bin/python2'
+if has('mac')
+  let g:python_host_prog = '/usr/local/bin/python2'
+elseif has('unix')
+  let g:python_host_prog = '/usr/bin/python2'
+endif
+
 let g:mapleader = "\<Space>"
 
 " Autoinstall vim-plug (https://github.com/junegunn/vim-plug) {{{
@@ -17,7 +22,10 @@ Plug 'dracula/vim'
 Plug 'itchyny/lightline.vim'
 " {{{
   set laststatus=2 " always show status bar
-  set guifont=Hack
+  " Neovim-qt Guifont command, to change the font
+  command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>")
+  " Set font on start
+  let g:Guifont = "Hack for Powerline:h13"
   let g:lightline = {
         \ 'colorscheme': 'solarized',
         \ 'active': {
@@ -164,7 +172,7 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
-set path+=**
+"set path+=**
 set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " splits
