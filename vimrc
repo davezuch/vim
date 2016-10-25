@@ -4,6 +4,8 @@ elseif has('unix')
   let g:python_host_prog = '/usr/bin/python2'
 endif
 
+" use system clipboard
+set clipboard=unnamedplus
 let g:mapleader = "\<Space>"
 
 " Autoinstall vim-plug (https://github.com/junegunn/vim-plug) {{{
