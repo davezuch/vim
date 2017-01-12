@@ -138,6 +138,7 @@ Plug 'itchyny/lightline.vim'
   " }}}
 " }}}
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
+Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/vim-easy-align'
 Plug 'crusoexia/vim-monokai'
 Plug 'pangloss/vim-javascript'
@@ -175,6 +176,9 @@ autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
 autocmd InsertLeave * match ExtraWhiteSpace /\s\+$/
 autocmd BufWinLeave * call clearmatches()
+"indent text and rehighlight -- vim tip_id=224
+vnoremap > ><CR>gv
+vnoremap < <<CR>gv
 "set path+=**
 set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
