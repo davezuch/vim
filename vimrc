@@ -154,6 +154,8 @@ Plug 'Valloric/YouCompleteMe'
 Plug 'scrooloose/syntastic'
 Plug 'nvie/vim-flake8'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'lambdatoast/elm.vim'
+Plug 'raichoo/purescript-vim'
 
 call plug#end()
 
