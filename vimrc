@@ -156,6 +156,7 @@ Plug 'nvie/vim-flake8'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'lambdatoast/elm.vim'
 Plug 'raichoo/purescript-vim'
+Plug 'neovimhaskell/haskell-vim'
 
 call plug#end()
 
