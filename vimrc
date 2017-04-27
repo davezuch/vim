@@ -137,6 +137,10 @@ Plug 'itchyny/lightline.vim'
   let s:p.normal.warning  = [ [ s:yellow, s:base01 ] ]
   " }}}
 " }}}
+Plug 'majutsushi/tagbar'
+" {{{
+nmap <F8> :TagbarToggle<CR>
+" }}}
 " Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/vim-easy-align'
