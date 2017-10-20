@@ -225,13 +225,14 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
 let g:syntastic_php_checkers = ['php']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_checkers = ['eslint']
+let g:syntastic_python_flake8_args='--ignore=E402'
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
@@ -239,14 +240,4 @@ au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
-
-" python with virtualenv support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
 
