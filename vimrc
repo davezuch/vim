@@ -8,153 +8,35 @@ endif
 set clipboard=unnamedplus
 let g:mapleader = "\<Space>"
 
-" Autoinstall vim-plug (https://github.com/junegunn/vim-plug) {{{
+" Autoinstall vim-plug (https://github.com/junegunn/vim-plug)
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall | source $MYVIMRC
 endif
-" }}}
-call plug#begin('~/.vim/plugged') " Plugins initialization start {{{
-" }}}
-"
-" Appearance
-" ==================================================================
-Plug 'dracula/vim'
-Plug 'itchyny/lightline.vim'
-" {{{
-  set laststatus=2 " always show status bar
-  " Neovim-qt Guifont command, to change the font
-  command -nargs=? Guifont call rpcnotify(0, 'Gui', 'SetFont', "<args>")
-  " Set font on start
-  let g:Guifont = "Hack for Powerline:h13"
-  let g:lightline = {
-        \ 'colorscheme': 'solarized',
-        \ 'active': {
-        \   'left': [ [ 'mode', 'paste' ],
-        \             [ 'fugitive', 'gitgutter', 'filename' ] ],
-        \   'right': [ [ 'percent', 'lineinfo' ],
-        \              [ 'syntastic' ],
-        \              [ 'fileformat', 'fileencoding', 'filetype' ] ]
-        \ },
-        \ 'component_function': {
-        \   'fugitive': 'LightLineFugitive',
-        \   'gitgutter': 'LightLineGitGutter',
-        \   'readonly': 'LightLineReadonly',
-        \   'modified': 'LightLineModified',
-        \   'syntastic': 'SyntasticStatuslineFlag',
-        \   'filename': 'LightLineFilename'
-        \ },
-        \ 'separator': { 'left': '▓▒░', 'right': '░▒▓' },
-        \ 'subseparator': { 'left': '>', 'right': '' }
-        \ }
+" Plugins initialization start
+call plug#begin('~/.vim/plugged')
 
-  function! LightLineModified()
-    if &filetype == "help"
-      return ""
-    elseif &modified
-      return "+"
-    elseif &modifiable
-      return ""
-    else
-      return ""
-    endif
-  endfunction
-
-  function! LightLineReadonly()
-    if &filetype == "help"
-      return ""
-    elseif &readonly
-      return "🔒"
-    endif
-    return ""
-  endfunction
-
-  function! LightLineFugitive()
-    return exists('*fugitive#head') ? fugitive#head() : ''
-  endfunction
-
-  function! LightLineGitGutter()
-    if ! exists('*GitGutterGetHunkSummary')
-          \ || ! get(g:, 'gitgutter_enabled', 0)
-          \ || winwidth('.') <= 90
-      return ''
-    endif
-    let symbols = [
-          \ g:gitgutter_sign_added,
-          \ g:gitgutter_sign_modified,
-          \ g:gitgutter_sign_removed
-          \ ]
-    let hunks = GitGutterGetHunkSummary()
-    let ret = []
-    for i in [0, 1, 2]
-      if hunks[i] > 0
-        call add(ret, symbols[i] . hunks[i])
-      endif
-    endfor
-    return join(ret, ' ')
-  endfunction
-
-  function! LightLineFilename()
-    return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ ('' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-  endfunction
-
-  " {{{ Modified theme
-  let s:base03    = [ '#151513', 233 ]
-  let s:base02    = [ '#30302c', 236 ]
-  let s:base01    = [ '#4e4e43', 237 ]
-  let s:base00    = [ '#666656', 242 ]
-  let s:base0     = [ '#808070', 244 ]
-  let s:base1     = [ '#949484', 246 ]
-  let s:base2     = [ '#a8a897', 248 ]
-  let s:base3     = [ '#e8e8d3', 253 ]
-  let s:yellow    = [ '#ffb964', 215 ]
-  let s:red       = [ '#cf6a4c', 167 ]
-  let s:magenta   = [ '#f0a0c0', 217 ]
-  let s:blue      = [ '#7697D6', 4   ]
-  let s:orange    = [ '#ffb964', 215 ]
-  let s:green     = [ '#99ad6a', 107 ]
-  let s:white     = [ '#FCFCFC', 15  ]
-
-  let s:p = {'normal': {}, 'inactive': {}, 'insert': {}, 'replace': {}, 'visual': {}, 'tabline': {}, 'terminal': {}}
-  let s:p.normal.left     = [ [ s:white, s:blue ], [ s:base3, s:base02 ] ]
-  let s:p.normal.right    = [ [ s:base02, s:base1 ], [ s:base3, s:base02 ] ]
-  let s:p.inactive.right  = [ [ s:base02, s:base00 ], [ s:base0, s:base02 ] ]
-  let s:p.inactive.left   = [ [ s:base0, s:base02 ], [ s:base00, s:base02 ] ]
-  let s:p.insert.left     = [ [ s:base02, s:orange ], [ s:base3, s:base01 ] ]
-  let s:p.replace.left    = [ [ s:base02, s:red ], [ s:base3, s:base01 ] ]
-  let s:p.visual.left     = [ [ s:base02, s:magenta ], [ s:base3, s:base01 ] ]
-  let s:p.terminal.left   = [ [ s:base02, s:green ], [ s:base3, s:base01 ] ]
-  let s:p.normal.middle   = [ [ s:base0, s:base03 ] ]
-  let s:p.inactive.middle = [ [ s:base00, s:base02 ] ]
-  let s:p.tabline.left    = [ [ s:base3, s:base02 ] ]
-  let s:p.tabline.tabsel  = [ [ s:white, s:blue ] ]
-  let s:p.tabline.middle  = [ [ s:base01, s:base03 ] ]
-  let s:p.tabline.right   = [ [ s:base03, s:base03 ], [ s:base03, s:base03 ] ]
-  let s:p.normal.error    = [ [ s:red, s:base02 ] ]
-  let s:p.normal.warning  = [ [ s:yellow, s:base01 ] ]
-  " }}}
-" }}}
 Plug 'majutsushi/tagbar'
-" {{{
 nmap <F8> :TagbarToggle<CR>
-" }}}
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/vim-easy-align'
-Plug 'crusoexia/vim-monokai'
 Plug 'pangloss/vim-javascript'
 Plug 'crusoexia/vim-javascript-lib'
-Plug 'raphamorim/lucario'
-Plug 'cseelus/vim-colors-lucid'
 Plug 'scrooloose/nerdtree'
+let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'tmhedberg/SimpylFold'
+"set path+=**
+set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
+"toggle NERDTree with space-nt
+map <leader>nt :NERDTreeToggle<CR>rlp.vim'
+"find current file in NERDTree with space-nf
+map <leader>nf :NERDTreeFind<CR>Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'Valloric/YouCompleteMe'
+let g:ycm_autoclose_preview_window_after_completion=1
+map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 Plug 'scrooloose/syntastic'
 Plug 'nvie/vim-flake8'
 Plug 'terryma/vim-multiple-cursors'
@@ -162,16 +44,43 @@ Plug 'lambdatoast/elm.vim'
 Plug 'raichoo/purescript-vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'vim-airline/vim-airline'
+set laststatus=2
+Plug 'frigoeu/psc-ide-vim'
+let g:psc_ide_import_on_completion = v:false
+"psc-ide bindings
+au FileType purescript nm <buffer> <silent> <leader>t :<C-U>call PSCIDEtype(PSCIDEgetKeyword(), v:true)<CR>
+au FileType purescript nm <buffer> <silent> <leader>T :<C-U>call PSCIDEaddTypeAnnotation(matchstr(getline(line(".")), '^\s*\zs\k\+\ze'))<CR>
+au FileType purescript nm <buffer> <silent> <leader>s :<C-U>call PSCIDEapplySuggestion()<CR>
+au FileType purescript nm <buffer> <silent> <leader>a :<C-U>call PSCIDEaddTypeAnnotation()<CR>
+au FileType purescript nm <buffer> <silent> <leader>i :<C-U>call PSCIDEimportIdentifier(PSCIDEgetKeyword())<CR>
+au FileType purescript nm <buffer> <silent> <leader>r :<C-U>call PSCIDEload()<CR>
+au FileType purescript nm <buffer> <silent> <leader>p :<C-U>call PSCIDEpursuit(PSCIDEgetKeyword())<CR>
+au FileType purescript nm <buffer> <silent> <leader>C :<C-U>call PSCIDEcaseSplit("!")<CR>
+au FileType purescript nm <buffer> <silent> <leader>f :<C-U>call PSCIDEaddClause("")<CR>
+au FileType purescript nm <buffer> <silent> <leader>qa :<C-U>call PSCIDEaddImportQualifications()<CR>
+au FileType purescript nm <buffer> <silent> ]d :<C-U>call PSCIDEgoToDefinition("", PSCIDEgetKeyword())<CR>
+Plug 'kana/vim-fakeclip'
+Plug 'tpope/vim-surround'
+Plug 'hdima/python-syntax'
+Plug 'djoshea/vim-autoread'
 
 call plug#end()
 
 " basic settings
 filetype plugin indent on
+set backspace=2
 set encoding=utf-8
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
-"set textwidth=79
+"extension based indent settings
+au BufNewFile,BufRead *.{py,hs,rs}
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set fileformat=unix
+set textwidth=100
 set expandtab
 set autoindent
 set fileformat=unix
@@ -187,8 +96,6 @@ autocmd BufWinLeave * call clearmatches()
 "indent text and rehighlight -- vim tip_id=224
 vnoremap > ><CR>gv
 vnoremap < <<CR>gv
-"set path+=**
-set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 
 " splits
 set splitbelow
@@ -199,27 +106,32 @@ nnoremap <C-L> <C-W><C-L>
 nnoremap <C-H> <C-W><C-H>
 
 " style
-syntax on
-set background=dark
-colorscheme dracula
+syntax enable
 set t_Co=256
-let g:monokai_term_italic = 1
-let g:monokai_gui_italic = 1
 let python_highlight_all=1
 set hlsearch
+highlight VertSplit cterm=none gui=none
 
 " basics
 inoremap jk <ESC>
-let g:ycm_autoclose_preview_window_after_completion=1
-map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 imap <BS> <Left><Del>
 " enable folding
 set foldmethod=indent
 set foldlevel=99
 "nnoremap <dd> za " remap space to fold
 
+"search for word under cursor with space-s
+map <leader>s /<C-r><C-w><CR>
+
+"toggle search highlighting with space-h
+map <leader>h :set hlsearch! hlsearch?<CR>
+
+"set swap directories
+set backupdir=~/.vim/backup//
+set directory=~/.vim/swap//
+set directory=~/.vim/undo//
+
 " plugin settings
-let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
