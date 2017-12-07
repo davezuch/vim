@@ -162,6 +162,7 @@ Plug 'lambdatoast/elm.vim'
 Plug 'raichoo/purescript-vim'
 Plug 'neovimhaskell/haskell-vim'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
@@ -232,7 +233,7 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_php_checkers = ['php']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_checkers = ['eslint']
-let g:syntastic_python_flake8_args='--ignore=E402'
+let g:syntastic_python_flake8_args='--ignore=E402 --max-line-length=100'
 
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
