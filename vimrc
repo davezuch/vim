@@ -127,11 +127,6 @@ map <leader>s /<C-r><C-w><CR>
 "toggle search highlighting with space-h
 map <leader>h :set hlsearch! hlsearch?<CR>
 
-"set swap directories
-set backupdir=~/.vim/backup//
-set directory=~/.vim/swap//
-set directory=~/.vim/undo//
-
 " plugin settings
 
 set statusline+=%#warningmsg#
