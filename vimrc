@@ -89,6 +89,7 @@ set number
 set list
 set listchars=tab:▸\ 
 highlight ExtraWhiteSpace ctermbg=red guibg=red
+highlight Search ctermfg=black
 match ExtraWhiteSpace /\s\+$/
 autocmd BufWinEnter * match ExtraWhiteSpace /\s\+$/
 autocmd InsertEnter * match ExtraWhiteSpace /\s\+\%#\@<!$/
