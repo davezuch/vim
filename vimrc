@@ -5,7 +5,11 @@ elseif has('unix')
 endif
 
 " use system clipboard
-set clipboard=unnamedplus
+if system('uname -s') == "Darwin\n"
+  set clipboard=unnamed "OSX
+else
+  set clipboard=unnamedplus "Linux
+endif
 let g:mapleader = "\<Space>"
 
 " Autoinstall vim-plug (https://github.com/junegunn/vim-plug)
@@ -29,9 +33,10 @@ Plug 'ctrlpvim/ctrlp.vim'
 "set path+=**
 set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
 "toggle NERDTree with space-nt
-map <leader>nt :NERDTreeToggle<CR>rlp.vim'
+map <leader>nt :NERDTreeToggle<CR>
 "find current file in NERDTree with space-nf
-map <leader>nf :NERDTreeFind<CR>Plug 'tmhedberg/SimpylFold'
+map <leader>nf :NERDTreeFind<CR>
+Plug 'tmhedberg/SimpylFold'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'shawncplus/phpcomplete.vim'
 Plug 'Valloric/YouCompleteMe'
@@ -61,7 +66,7 @@ au FileType purescript nm <buffer> <silent> <leader>C :<C-U>call PSCIDEcaseSplit
 au FileType purescript nm <buffer> <silent> <leader>f :<C-U>call PSCIDEaddClause("")<CR>
 au FileType purescript nm <buffer> <silent> <leader>qa :<C-U>call PSCIDEaddImportQualifications()<CR>
 au FileType purescript nm <buffer> <silent> ]d :<C-U>call PSCIDEgoToDefinition("", PSCIDEgetKeyword())<CR>
-Plug 'kana/vim-fakeclip'
+"Plug 'kana/vim-fakeclip'
 Plug 'tpope/vim-surround'
 Plug 'hdima/python-syntax'
 Plug 'djoshea/vim-autoread'
