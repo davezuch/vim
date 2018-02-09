@@ -24,9 +24,22 @@ call plug#begin('~/.vim/plugged')
 Plug 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 Plug 'scrooloose/nerdcommenter'
+
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+" Replace the default delimiters for PS / Haskell
+let g:NERDCustomDelimiters = {
+    \ 'purescript': { 'leftAlt': '{-', 'rightAlt': '-}', 'left': '--', 'right': '' },
+    \ 'haskell': { 'leftAlt': '{-', 'rightAlt': '-}', 'left': '--', 'right': '' },
+    \ }
+
 Plug 'junegunn/vim-easy-align'
-Plug 'pangloss/vim-javascript'
-Plug 'crusoexia/vim-javascript-lib'
+Plug 'pangloss/vim-javascript', { 'for': ['javascript'] }
+Plug 'crusoexia/vim-javascript-lib', { 'for': ['javascript'] }
 Plug 'scrooloose/nerdtree'
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 Plug 'ctrlpvim/ctrlp.vim'
@@ -37,38 +50,54 @@ map <leader>nt :NERDTreeToggle<CR>
 "find current file in NERDTree with space-nf
 map <leader>nf :NERDTreeFind<CR>
 Plug 'tmhedberg/SimpylFold'
-Plug 'vim-scripts/indentpython.vim'
-Plug 'shawncplus/phpcomplete.vim'
+Plug 'vim-scripts/indentpython.vim', { 'for': ['python'] }
+Plug 'shawncplus/phpcomplete.vim', { 'for': ['php'] }
 Plug 'Valloric/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 Plug 'scrooloose/syntastic'
-Plug 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8', { 'for': ['python'] }
 Plug 'terryma/vim-multiple-cursors'
-Plug 'lambdatoast/elm.vim'
-Plug 'raichoo/purescript-vim'
-Plug 'neovimhaskell/haskell-vim'
+Plug 'lambdatoast/elm.vim', { 'for': ['elm'] }
+Plug 'raichoo/purescript-vim', { 'for': ['purescript'] }
+
+let purescript_indent_case = 2
+let purescript_indent_where = 2
+
+" filetype settings
+"au FileType javascript setl sw=2 sts=2 ts=2
+au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
+
+Plug 'neovimhaskell/haskell-vim', { 'for': ['haskell'] }
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-airline/vim-airline'
 set laststatus=2
-Plug 'frigoeu/psc-ide-vim'
+Plug 'frigoeu/psc-ide-vim', { 'for': ['purescript'] }
+
 let g:psc_ide_import_on_completion = v:false
 "psc-ide bindings
-au FileType purescript nm <buffer> <silent> <leader>t :<C-U>call PSCIDEtype(PSCIDEgetKeyword(), v:true)<CR>
-au FileType purescript nm <buffer> <silent> <leader>T :<C-U>call PSCIDEaddTypeAnnotation(matchstr(getline(line(".")), '^\s*\zs\k\+\ze'))<CR>
-au FileType purescript nm <buffer> <silent> <leader>s :<C-U>call PSCIDEapplySuggestion()<CR>
-au FileType purescript nm <buffer> <silent> <leader>a :<C-U>call PSCIDEaddTypeAnnotation()<CR>
-au FileType purescript nm <buffer> <silent> <leader>i :<C-U>call PSCIDEimportIdentifier(PSCIDEgetKeyword())<CR>
-au FileType purescript nm <buffer> <silent> <leader>r :<C-U>call PSCIDEload()<CR>
-au FileType purescript nm <buffer> <silent> <leader>p :<C-U>call PSCIDEpursuit(PSCIDEgetKeyword())<CR>
-au FileType purescript nm <buffer> <silent> <leader>C :<C-U>call PSCIDEcaseSplit("!")<CR>
-au FileType purescript nm <buffer> <silent> <leader>f :<C-U>call PSCIDEaddClause("")<CR>
-au FileType purescript nm <buffer> <silent> <leader>qa :<C-U>call PSCIDEaddImportQualifications()<CR>
-au FileType purescript nm <buffer> <silent> ]d :<C-U>call PSCIDEgoToDefinition("", PSCIDEgetKeyword())<CR>
+au FileType purescript nm <buffer> <silent> <leader>L :Plist<CR>
+au FileType purescript nm <buffer> <silent> <leader>l :Pload!<CR>
+au FileType purescript nm <buffer> <silent> <leader>r :Prebuild!<CR>
+au FileType purescript nm <buffer> <silent> <leader>f :PaddClause<CR>
+au FileType purescript nm <buffer> <silent> <leader>t :PaddType<CR>
+au FileType purescript nm <buffer> <silent> <leader>a :Papply<CR>
+au FileType purescript nm <buffer> <silent> <leader>A :Papply!<CR>
+au FileType purescript nm <buffer> <silent> <leader>C :Pcase!<CR>
+au FileType purescript nm <buffer> <silent> <leader>i :Pimport<CR>
+au FileType purescript nm <buffer> <silent> <leader>qa :PaddImportQualifications<CR>
+au FileType purescript nm <buffer> <silent> <leader>g :Pgoto<CR>
+au FileType purescript nm <buffer> <silent> <leader>p :Pursuit<CR>
+au FileType purescript nm <buffer> <silent> <leader>T :Ptype<CR>
+
 "Plug 'kana/vim-fakeclip'
 Plug 'tpope/vim-surround'
-Plug 'hdima/python-syntax'
+Plug 'hdima/python-syntax', { 'for': ['python'] }
 Plug 'djoshea/vim-autoread'
 
 call plug#end()
@@ -81,11 +110,15 @@ set tabstop=2
 set softtabstop=2
 set shiftwidth=2
 "extension based indent settings
-au BufNewFile,BufRead *.{py,hs,rs}
+au BufNewFile,BufRead *.{html,py,hs,rs}
     \ set tabstop=4 |
     \ set softtabstop=4 |
     \ set shiftwidth=4 |
     \ set fileformat=unix
+au BufNewFile,BufRead *.{elm,purs,js,css,scss,php}
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
 set textwidth=100
 set expandtab
 set autoindent
@@ -122,9 +155,6 @@ highlight VertSplit cterm=none gui=none
 " basics
 inoremap jk <ESC>
 imap <BS> <Left><Del>
-" enable folding
-set foldmethod=indent
-set foldlevel=99
 "nnoremap <dd> za " remap space to fold
 
 "search for word under cursor with space-s
@@ -148,10 +178,10 @@ let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_checkers = ['eslint']
 let g:syntastic_python_flake8_args='--ignore=E402 --max-line-length=100'
 
-" filetype settings
-"au FileType javascript setl sw=2 sts=2 ts=2
-au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
-
+" Trim whitespace on save
+fun! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+endfun
