@@ -151,6 +151,10 @@ set t_Co=256
 let python_highlight_all=1
 set hlsearch
 highlight VertSplit cterm=none gui=none
+" terminal overrides
+highlight LineNr ctermfg=red
+highlight CursorLineNr ctermfg=red
+highlight Statement ctermfg=cyan
 
 " basics
 inoremap jk <ESC>
