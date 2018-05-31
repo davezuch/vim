@@ -119,7 +119,6 @@ au BufNewFile,BufRead *.{elm,purs,js,css,scss,php}
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
-set textwidth=100
 set expandtab
 set autoindent
 set fileformat=unix
