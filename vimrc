@@ -45,6 +45,9 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
 Plug 'ctrlpvim/ctrlp.vim'
 "set path+=**
 set wildignore+=*/node_modules/*,*/vendor/*,*/bower_components/*,*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.git
+let g:ctrlp_custom_ignore = {
+  \ 'dir': '\v[\/]output$',
+  \ }
 "toggle NERDTree with space-nt
 map <leader>nt :NERDTreeToggle<CR>
 "find current file in NERDTree with space-nf
@@ -60,10 +63,6 @@ Plug 'nvie/vim-flake8', { 'for': ['python'] }
 Plug 'terryma/vim-multiple-cursors'
 Plug 'lambdatoast/elm.vim', { 'for': ['elm'] }
 Plug 'raichoo/purescript-vim', { 'for': ['purescript'] }
-
-let purescript_indent_case = 2
-let purescript_indent_where = 2
-
 " filetype settings
 "au FileType javascript setl sw=2 sts=2 ts=2
 au BufNewFile,BufRead *.js,*.html,*.css,*.sass,*.php
@@ -188,3 +187,10 @@ fun! <SID>StripTrailingWhitespaces()
     %s/\s\+$//e
     call cursor(l, c)
 endfun
+
+" purescript
+let purescript_indent_case = 2
+let purescript_indent_where = 2
+let purescript_indent_do = 2
+let purescript_indent_dot = v:true
+let purescript_indent_in = 0
